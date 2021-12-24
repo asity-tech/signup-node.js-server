@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/asity-tech/signup_nodejs_server#readme",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "pg": "^8.7.1"
   }
 }
