@@ -3,10 +3,10 @@ const {Client} = require('pg');
 const port = 3000;
 const app = express();
 var client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "asitysignup",
-    password: "blah",
+    user: process.env.user,
+    host: process.env.host,
+    database: process.env.database,
+    password: process.env.password,
     port: 5432,
 })
 app.get('/', (req, res) => {
