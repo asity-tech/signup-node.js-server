@@ -2,7 +2,8 @@ const express = require('express');
 const res = require('express/lib/response');
 const {Client} = require('pg');
 var bodyParser = require('body-parser');
-const port = 3000;
+const { json } = require('body-parser');
+const port = 3001;
 const app = express();
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -49,7 +50,7 @@ app.post('/signup', (req, res) => {
     });
 });
 
-app.get('/allsignup', (req, res) => {
+app.get('/allUser', (req, res) => {
     var selectquery = 'select * from accounts order by user_id desc';
     client.query(selectquery, (err, result) => {
         if(err){
@@ -57,6 +58,21 @@ app.get('/allsignup', (req, res) => {
         }
         else{
             res.send(result.rows);
+        }
+    })
+})
+
+app.delete('/deleteUser', (req, res) => {
+    var emailid = req.body.Email;
+    var deletequery = `delete from accounts where email = '${emailid}' returning *`;
+    client.query(deletequery, (err, result)=> {
+        if(err){
+            res.send(err.message || err);
+        }
+        else{
+            res.send(result.rows[0]);
+            // console.log(result.rows[0]);
+            console.log('User deleted');
         }
     })
 })
