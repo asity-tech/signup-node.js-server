@@ -49,6 +49,17 @@ app.post('/signup', (req, res) => {
     });
 });
 
+app.get('/allsignup', (req, res) => {
+    var selectquery = 'select * from accounts order by user_id desc';
+    client.query(selectquery, (err, result) => {
+        if(err){
+            res.send(err.message || err);
+        }
+        else{
+            res.send(result.rows);
+        }
+    })
+})
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
     client.connect((err) => {
