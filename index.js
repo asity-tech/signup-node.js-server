@@ -8,11 +8,11 @@ const app = express();
 app.use(bodyParser.json())
 
 var client = new Client({
-    user: process.env.user || 'postgres',
-    host: process.env.host|| 'localhost',
-    database: process.env.database || 'asitysignup',
-    password: process.env.password || 'blah',
-    port: 5432,
+    user: process.env.user,
+    host: process.env.host,
+    database: process.env.database,
+    password: process.env.password,
+    port: process.env.port,
 })
 
 function removeWhiteSpaceFromEnd(title) {
@@ -28,7 +28,7 @@ function removeWhiteSpaceFromEnd(title) {
 }
 
 app.get('/', (req, res) => {
-    res.send("welcome to the magic world -> Asity");
+    res.send("Welcome to the magic world -> Asity");
 })
 
 app.post('/signup', (req, res) => {
@@ -43,7 +43,7 @@ app.post('/signup', (req, res) => {
         }
         else{
             res.status(201);
-            console.log('Db insertion successful');
+            console.log('Db insertion: Successful');
             res.send(result);
         }
     });
