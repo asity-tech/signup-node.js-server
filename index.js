@@ -76,6 +76,32 @@ app.delete('/deleteUser', (req, res) => {
         }
     })
 })
+
+app.patch('/edit', (req, res) => {
+    var a = [];
+    a = Object.keys(req.body);
+    var updatesql = 'update accounts set ';
+    for (var index = 1; index < a.length; index++) {
+        var u = req.body[`${a[index]}`];
+        if (index == a.length - 1) {
+          updatesql += ` ${a[index]} = '${u}' `;
+        } else {
+          updatesql += ` ${a[index]} = '${u}', `;
+        }
+    }
+    updatesql += `where user_id = ${req.body.user_id} returning *`;
+    client.query(updatesql, (err, result) => {
+        if(err){
+            res.send(err.message || err);
+        }
+        else{
+            // res.send(201);
+            res.send(result.rows[0]);
+            console.log('Update: Successful');
+        }
+    })
+
+})
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
     client.connect((err) => {
