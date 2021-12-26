@@ -3,7 +3,7 @@ const res = require('express/lib/response');
 const {Client} = require('pg');
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
-const port = 3001;
+const port = 3000;
 const app = express();
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
