@@ -1,10 +1,12 @@
 const express = require('express');
 const res = require('express/lib/response');
+var cors = require('cors')
 const {Client} = require('pg');
 var bodyParser = require('body-parser');
 const { json } = require('body-parser');
-const port = 3000;
+const port = 3001;
 const app = express();
+app.use(cors())
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
@@ -33,9 +35,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-    var rawEmail = req.body.Email
+    var rawEmail = req.body.email
     var emailid = removeWhiteSpaceFromEnd(rawEmail);
-    var rawPasscode = req.body.Password
+    var rawPasscode = req.body.password
     var passcode = removeWhiteSpaceFromEnd(rawPasscode);
     const insertquery = `insert into accounts(email, password) values('${emailid}', '${passcode}')`;
     client.query(insertquery, (err, result) => {
