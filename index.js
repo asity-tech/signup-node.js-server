@@ -39,17 +39,30 @@ app.post('/signup', (req, res) => {
     var emailid = removeWhiteSpaceFromEnd(rawEmail);
     var rawPasscode = req.body.password
     var passcode = removeWhiteSpaceFromEnd(rawPasscode);
-    const insertquery = `insert into accounts(email, password) values('${emailid}', '${passcode}')`;
-    client.query(insertquery, (err, result) => {
-        if(err){
-            res.send(err.message || err);
-        }
-        else{
-            res.status(201);
-            console.log('Db insertion: Successful');
-            res.send(result);
-        }
-    });
+    if (emailid == "") {
+        res.status(406);
+        res.send({
+          message: "Invalid Email",
+        });
+    }
+    else if (passcode == "") {
+        res.status(406);
+        res.send({
+          message: "Invalid Password",
+        });
+    }
+    else {
+        const insertquery = `insert into accounts(email, password) values('${emailid}', '${passcode}')`;
+        client.query(insertquery, (err, result) => {
+            if(err){
+                res.send(err.message || err);
+            }
+            else{
+                res.status(201);
+                console.log('Db insertion: Successful');
+            }
+        });
+    }
 });
 
 app.get('/allUser', (req, res) => {
@@ -73,7 +86,6 @@ app.delete('/deleteUser', (req, res) => {
         }
         else{
             res.send(result.rows[0]);
-            // console.log(result.rows[0]);
             console.log('User deleted');
         }
     })
