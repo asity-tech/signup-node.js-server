@@ -81,8 +81,8 @@ app.get('/allUser', (req, res) => {
 })
 
 app.delete('/deleteUser', (req, res) => {
-    var emailid = req.body.Email;
-    var deletequery = `delete from accounts where email = '${emailid}' returning *`;
+    var emailid = req.body.email;
+    var deletequery = `delete from accounts where email = '${emailid}'`;
     client.query(deletequery, (err, result)=> {
         if(err){
             res.send(err.message || err);
