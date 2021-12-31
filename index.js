@@ -62,6 +62,7 @@ app.post('/signup', (req, res) => {
             }
             else{
                 res.status(201);
+                res.send(result.rows);
                 console.log('Db insertion: Successful');
             }
         });
